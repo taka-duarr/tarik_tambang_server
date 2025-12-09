@@ -41,5 +41,30 @@ class AuthController extends Controller
             ]
         ]);
     }
+
+    public function register(Request $request)
+{
+    $request->validate([
+        'username' => 'required|unique:users,username|min:3',
+        'password' => 'required|min:4'
+    ]);
+
+    $user = User::create([
+        'username' => $request->username,
+        'password' => Hash::make($request->password)
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Registrasi berhasil',
+        'user' => [
+            'id' => $user->id,
+            'username' => $user->username
+        ]
+    ]);
+}
+
+
+
 }
 
