@@ -8,6 +8,7 @@ class PlayerScore extends Model
     protected $table = 'leaderboard';
 
     protected $fillable = [
+        'user_id',
         'username',
         'wins'
     ];

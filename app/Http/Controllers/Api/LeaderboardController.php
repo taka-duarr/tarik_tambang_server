@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\PlayerScore;
-
+use Illuminate\Support\Facades\Auth;
 
 class LeaderboardController extends Controller
 {
@@ -19,32 +19,36 @@ class LeaderboardController extends Controller
         ]);
     }
 
-    public function addWin(Request $request)
+public function addWin()
 {
-    $request->validate([
-        'username' => 'required'
-    ]);
+    $user = Auth::user();
 
-    // cek user ada atau tidak
-    $player = PlayerScore::where('username', $request->username)->first();
-
-    if (!$player) {
-        // jika belum ada, buat baru
-        $player = PlayerScore::create([
-            'username' => $request->username,
-            'wins' => 1
-        ]);
-    } else {
-        // tambahkan kemenangan
-        $player->wins += 1;
-        $player->save();
+    if (!$user) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized'
+        ], 401);
     }
+
+    $score = PlayerScore::firstOrCreate(
+        ['user_id' => $user->id],
+        [
+            'username' => $user->username,
+            'wins' => 0
+        ]
+    );
+
+    $score->wins += 1;
+    $score->save();
 
     return response()->json([
         'success' => true,
-        'message' => 'Win updated',
-        'wins' => $player->wins
+        'message' => 'Win berhasil ditambahkan',
+        'wins' => $score->wins
     ]);
 }
+
+
+
 
 }

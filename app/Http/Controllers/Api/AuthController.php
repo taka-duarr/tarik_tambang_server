@@ -6,63 +6,49 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
-    {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
+public function login(Request $request)
+{
+    $credentials = $request->only('username', 'password');
 
-        $user = User::where('username', $request->username)->first();
-
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Username tidak ditemukan'
-            ]);
-        }
-
-        if (!Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Password salah'
-            ]);
-        }
-
+    if (!$token = auth('api')->attempt($credentials)) {
         return response()->json([
-            'success' => true,
-            'message' => 'Login berhasil',
-            'user' => [
-                'id' => $user->id,
-                'username' => $user->username
-            ]
-        ]);
+            'success' => false,
+            'message' => 'Username atau password salah'
+        ], 401);
     }
 
-    public function register(Request $request)
+    return response()->json([
+        'success' => true,
+        'message' => 'Login berhasil',
+        'access_token' => $token,
+        'token_type' => 'Bearer',
+        'expires_in' => auth('api')->factory()->getTTL() * 60
+    ]);
+}
+
+
+public function register(Request $request)
 {
     $request->validate([
-        'username' => 'required|unique:users,username|min:3',
-        'password' => 'required|min:4'
+        'username' => 'required|unique:users',
+        'password' => 'required'
     ]);
 
-    $user = User::create([
+    User::create([
         'username' => $request->username,
-        'password' => Hash::make($request->password)
+        'password' => bcrypt($request->password)
     ]);
 
     return response()->json([
         'success' => true,
-        'message' => 'Registrasi berhasil',
-        'user' => [
-            'id' => $user->id,
-            'username' => $user->username
-        ]
+        'message' => 'Register berhasil'
     ]);
 }
+
 
 
 
