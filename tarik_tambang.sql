@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 09, 2025 at 02:37 AM
+-- Generation Time: Dec 22, 2025 at 07:18 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.17
 
@@ -104,6 +104,7 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `leaderboard` (
   `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `wins` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -114,22 +115,11 @@ CREATE TABLE `leaderboard` (
 -- Dumping data for table `leaderboard`
 --
 
-INSERT INTO `leaderboard` (`id`, `username`, `wins`, `created_at`, `updated_at`) VALUES
-(1, 'Firman', 12, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(2, 'Andi', 10, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(3, 'Budi', 9, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(4, 'Cahyo', 8, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(5, 'Dewi', 8, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(6, 'Eka', 7, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(7, 'Fajar', 6, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(8, 'Gilang', 5, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(9, 'Hana', 5, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(10, 'Indra', 4, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(11, 'Joko', 3, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(12, 'Kiki', 3, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(13, 'Lutfi', 2, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(14, 'Mira', 1, '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
-(15, 'Nanda', 0, '2025-12-08 03:04:02', '2025-12-08 03:04:02');
+INSERT INTO `leaderboard` (`id`, `user_id`, `username`, `wins`, `created_at`, `updated_at`) VALUES
+(36, 8, 'budi', 8, NULL, NULL),
+(37, 9, 'hutao', 9, NULL, NULL),
+(38, 13, 'firman', 5, '2025-12-16 09:06:47', '2025-12-21 21:28:51'),
+(39, 14, 'ayaya', 1, '2025-12-22 00:15:22', '2025-12-22 00:15:22');
 
 -- --------------------------------------------------------
 
@@ -174,8 +164,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('losXzhPGzF8x9JGStlp2xuRDqNZRIhqfDLLgr2fF', NULL, '::1', 'PostmanRuntime/7.39.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicmxsVDZvUHk2SGlPdlZIQ2lGV29iNmJFbUgzb2RNVUx5c3ZHbHVqdCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3QvdGFyaWtfdGFtYmFuZ19zZXJ2ZXIvcHVibGljIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1765178766),
-('NPbRfXlskXeAyZn4E6EWOPHxSbS3HoFT90msfnko', NULL, '127.0.0.1', 'PostmanRuntime/7.39.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSHJjRGVXQXIyRDFuazNld3JNaFp5S2pnQlBXcWFUSW5ObDJOSGVUWiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1765186636);
+('1b2DfmCboHcQwstSXzqdkPm8jc44OMUalZoEnA7l', NULL, '127.0.0.1', 'PostmanRuntime/7.39.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV0dwMHRFZjZqTkJlbkFydlNRYjlEQlprQlF1YmE1eUJFYkV3Qlp5cyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1765792970),
+('KXMO3qsGfnhyPgt6DCZSXDFZLssVl0B51G7mdWLD', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUTY5VE9PcXBkRnV5Z1dGZXNMbnpmaUd0MHVQSW15SThQMkNkTmF6cCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1765846944),
+('Urtkz4Hmw6UvogE39khIq9auT65E3tBUiIUWSUOE', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiOVREektua3ozNlNTSjhHcTBrU0E4cDZiZE9JdUNJRUJJOUxhUGduMiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1765795278);
 
 -- --------------------------------------------------------
 
@@ -196,9 +187,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(7, 'firman', '$2y$12$kXH6UhQTF2hJqVHdMbpnies3V5S.InPeh9nNPyykk2xffg2R4hu..', '2025-12-08 03:04:01', '2025-12-08 03:04:01'),
 (8, 'budi', '$2y$12$LsVAHcTQArTRzi9Rk7NmO.ccLtbh.E/DkDQdHTRus8wi4nfjdydvu', '2025-12-08 03:04:01', '2025-12-08 03:04:01'),
-(9, 'hutao', '$2y$12$RCYq7pmovUWlQoagjH9De.hKy.ogRturfm5f7zoEA1B9iQD1l0qk2', '2025-12-08 03:04:02', '2025-12-08 03:04:02');
+(9, 'hutao', '$2y$12$RCYq7pmovUWlQoagjH9De.hKy.ogRturfm5f7zoEA1B9iQD1l0qk2', '2025-12-08 03:04:02', '2025-12-08 03:04:02'),
+(12, 'babi', '$2y$12$hZWMimnkopSPY7Dz8bJW8.4cYh.YJkDjMij.YTIH9efEbTx.NaHv2', '2025-12-15 21:26:16', '2025-12-15 21:26:16'),
+(13, 'firman', '$2y$12$oduCGE.hKOwe7QPAQVMeMu5ym97VhFWG8de2w.YJrvA.GmyKMAcBS', '2025-12-15 22:33:30', '2025-12-16 08:09:29'),
+(14, 'ayaya', '$2y$12$.VrJJVzkhWFqgAri2qZ21eVp/YojS/4zLGbVYskPcmAibjgfhYRfW', '2025-12-22 00:12:58', '2025-12-22 00:12:58');
 
 --
 -- Indexes for dumped tables
@@ -240,7 +233,8 @@ ALTER TABLE `job_batches`
 -- Indexes for table `leaderboard`
 --
 ALTER TABLE `leaderboard`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `migrations`
@@ -283,7 +277,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `leaderboard`
 --
 ALTER TABLE `leaderboard`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -295,7 +289,17 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `leaderboard`
+--
+ALTER TABLE `leaderboard`
+  ADD CONSTRAINT `leaderboard_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
